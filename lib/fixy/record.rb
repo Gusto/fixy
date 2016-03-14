@@ -54,7 +54,13 @@ module Fixy
         end
 
         if value.is_a? Proc
-          define_method(name) { self.instance_exec(&value) }
+          define_method(name) do
+            begin
+              self.instance_exec(&value)
+            rescue => e
+              raise e, "#{e.message} (field name: #{name})"
+            end
+          end
         else
           define_method(name) { value }
         end

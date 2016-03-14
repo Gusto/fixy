@@ -15,7 +15,7 @@ describe 'Defining a Record' do
           field :first_name, 10, '1-10' , :alphanumeric
           field :last_name , 10, '11-20', :alphanumeric
         end
-      }.not_to raise_error
+      }.not_to raise_error()
     end
   end
 
@@ -215,6 +215,18 @@ describe 'Generating a Record' do
 
     it 'uses the given line ending' do
       PersonRecordWithLineEnding.new.generate.should eq('Use My Value'.ljust(20) << "\r\n")
+    end
+  end
+
+  context 'when the value proc raises and error' do
+    class PersonRecordWithError < Fixy::Record
+      include Fixy::Formatter::Alphanumeric
+      set_record_length 20
+      set_line_ending Fixy::Record::LINE_ENDING_CRLF
+      field(:description , 20, '1-20', :alphanumeric) { non_existant_var }
+    end
+    it 'includes the field name in the error message' do
+      expect { PersonRecordWithError.new.generate }.to raise_error(NameError, /field name: description/)
     end
   end
 end
