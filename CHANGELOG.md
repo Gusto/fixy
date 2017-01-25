@@ -1,3 +1,7 @@
+## v0.2.0
+
+* Numeric fields can be nil to zero-pad
+
 ## v0.0.8
 
 * Strip line endings from fields in record.
