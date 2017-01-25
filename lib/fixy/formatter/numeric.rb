@@ -9,14 +9,12 @@ module Fixy
       #
 
       def format_numeric(input, length)
-        input_as_string = input.to_s
+        input = input.to_s
 
-        unless input.nil?
-          raise ArgumentError, "Invalid Input (only digits are accepted) (input: #{input})" unless input_as_string =~ /^\d+$/
-          raise ArgumentError, "Not enough length (input: #{input}, length: #{length})" if input_as_string.length > length
-        end
+        raise ArgumentError, "Invalid Input (only digits are accepted) (input: #{input})" unless input =~ /^\d*$/
+        raise ArgumentError, "Not enough length (input: #{input}, length: #{length})" if input.length > length
 
-        input_as_string.rjust(length, '0')
+        input.rjust(length, '0')
       end
     end
   end

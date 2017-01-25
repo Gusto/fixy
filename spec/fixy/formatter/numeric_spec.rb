@@ -16,6 +16,11 @@ describe Fixy::Formatter::Numeric do
       it { is_expected.to eq('0' * length) }
     end
 
+    context 'when input is an empty string' do
+      let(:input) { '' }
+      it { is_expected.to eq('0' * length) }
+    end
+
     context 'when input is non-numeric' do
       let(:input) { 'Not a num' }
 
