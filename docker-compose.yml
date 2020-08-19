@@ -1,0 +1,8 @@
+version: '2'
+services:
+  app:
+    build:
+      context: .
+    volumes:
+    - .gem/credentials:/home/gusto/.gem/credentials
+    - ~/bin/gemstash_safe_publish.sh:/home/gusto/bin/gemstash_safe_publish.sh
