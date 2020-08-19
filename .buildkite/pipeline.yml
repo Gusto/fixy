@@ -1,0 +1,14 @@
+steps:
+- name: ':ruby: Test'
+  command: 'docker-compose build && docker-compose --project-name $BUILDKITE_JOB_ID run app bundle exec rake spec'
+  agents:
+    queue: single
+- wait
+- block: ':rocket: Publish to Gem Server'
+  prompt: 'Publish this gem to the server using Fixy::VERSION as the version?'
+  branches: 'master'
+- name: ':ruby: Build & Publish gem'
+  command: 'docker-compose build && docker-compose --project-name $BUILDKITE_JOB_ID run app sh /home/gusto/bin/gemstash_safe_publish.sh'
+  agents:
+    queue: gemstash-publish
+  branches: 'master'
