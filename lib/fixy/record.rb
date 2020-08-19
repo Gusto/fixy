@@ -42,7 +42,7 @@ module Fixy
         # We're good to go :)
         @record_fields[range_from] = { name: name, from: range_from, to: range_to, size: size, type: type}
 
-        field_value(name, Proc.new) if block_given?
+        field_value(name, &block) if block_given?
       end
 
       # Convenience method for creating field methods
