@@ -1,3 +1,7 @@
+## v0.4.1
+
+* Make fixy compatible with Ruby 2.7 without a warning about `Proc.new`
+
 ## v0.4.0
 
 * Make fixy compatible with frozen string input
