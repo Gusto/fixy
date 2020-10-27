@@ -14,18 +14,18 @@ module Fixy
         result = ''
 
         if input_string.bytesize <= byte_width
-          result << input_string
+          result += input_string
         else
           input_string.each_char do |char|
             if result.bytesize + char.bytesize <= byte_width
-              result << char
+              result += char
             else
               break
             end
           end
         end
 
-        result << ' ' * (byte_width - result.bytesize)
+        result + ' ' * (byte_width - result.bytesize)
       end
     end
   end

@@ -1,3 +1,11 @@
+## v0.4.1
+
+* Make fixy compatible with Ruby 2.7 without a warning about `Proc.new`
+
+## v0.4.0
+
+* Make fixy compatible with frozen string input
+
 ## v0.3.0
 
 * Include class and field name when a field fails validation or raises an error

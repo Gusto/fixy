@@ -30,15 +30,15 @@ module Fixy
     end
 
     def prepend_record(record)
-      @content = record.generate(debug_mode) << @content
+      @content = record.generate(debug_mode) + @content
     end
 
     def append_record(record)
-      @content << record.generate(debug_mode)
+      @content += record.generate(debug_mode)
     end
 
     def parse_record(klass, record)
-      @content << klass.parse(record, debug_mode)[:record]
+      @content += klass.parse(record, debug_mode)[:record]
     end
   end
 end

@@ -15,7 +15,7 @@ module Fixy
 
       def format_rate(input, length)
         raise ArgumentError, "Invalid rate (rate: #{input}). Rate must be >= 0." if input < 0
-        (('%0' << length.to_s << 'd') % integerize(input * (10 ** length)))[0..(length - 1)]
+        (('%0' + length.to_s + 'd') % integerize(input * (10 ** length)))[0..(length - 1)]
       end
     end
   end

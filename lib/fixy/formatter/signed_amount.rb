@@ -12,7 +12,7 @@ module Fixy
 
       def format_signed_amount(input, length)
         sign = input >= 0 ? '+' : '-'
-        format_amount(input, length - 1) << sign
+        format_amount(input, length - 1) + sign
       end
     end
   end
