@@ -104,7 +104,7 @@ module Fixy
           value  = byte_record[from..to].pack('C*').force_encoding('utf-8')
 
           formatted_value = decorator.field(value, current_record, current_position, method, field[:size], field[:type])
-          output += formatted_value
+          output << formatted_value
           fields << { name:  method, value: value }
 
           current_position = field[:to] + 1
@@ -134,13 +134,13 @@ module Fixy
         formatted_value = format_value(field[:name], field[:size], field[:type])
         formatted_value = decorator.field(formatted_value, current_record, current_position, field[:name], field[:size], field[:type])
 
-        output += formatted_value
+        output << formatted_value
         current_position = field[:to] + 1
         current_record += 1
       end
 
       # Documentation mandates that every record ends with new line.
-      output += line_ending
+      output << line_ending
 
       # All ready. In the words of Mr. Peters: "Take it and go!"
       decorator.record(output)

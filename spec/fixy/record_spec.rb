@@ -250,7 +250,6 @@ describe 'Parsing a record' do
   let(:multibyte_record) { 'älimuk   Karil     ' }
   context 'with a record of multi-byte characters' do
     it 'should not raise with the right number of bytes' do
-      pending "This test does not work on Linux"
       PersonRecordE.parse(multibyte_record, true).should eq({
         record: File.read('spec/fixtures/debug_parsed_multibyte_record.txt'),
       fields: [
