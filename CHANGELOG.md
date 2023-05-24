@@ -1,3 +1,7 @@
+## v0.5.0
+
+* Make performace improvements related to string concatenation.
+
 ## v0.4.1
 
 * Make fixy compatible with Ruby 2.7 without a warning about `Proc.new`
