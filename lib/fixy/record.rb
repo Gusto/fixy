@@ -5,6 +5,8 @@ module Fixy
     LINE_ENDING_CRLF = "#{LINE_ENDING_CR}#{LINE_ENDING_LF}".freeze
     DEFAULT_LINE_ENDING = LINE_ENDING_LF
 
+    InvalidRecordLength = Class.new(StandardError)
+
     class << self
       def set_record_length(count)
         define_singleton_method('record_length') { count }
@@ -150,10 +152,18 @@ module Fixy
 
     # Format value with user defined formatters.
     def format_value(name, size, type)
-      value = send(name)
-      send("format_#{type}".to_sym, value, size)
-    rescue => e
-      raise e, "#{self.class.name}##{name}: #{e.message}"
+      formatted_value = begin
+        value = send(name)
+        formatted_value = send("format_#{type}".to_sym, value, size)
+      rescue => e
+        raise e, "#{self.class.name}##{name}: #{e.message}"
+      end
+
+      if formatted_value.length != size
+        raise InvalidRecordLength, "formatted value for `#{name}` violates size constraint (expected: #{size}, actual: #{formatted_value.length}), formatter: #{type}"
+      end
+
+      formatted_value
     end
 
     # Retrieves the list of record fields that were set through the class methods.
