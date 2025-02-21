@@ -1,0 +1,62 @@
+name: Ruby
+
+on:
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  run_tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    name: Ruby ${{ matrix.ruby }}
+    strategy:
+      matrix:
+        ruby:
+          - "3.2.7"
+          - "3.3.7"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          show-progress: "false"
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - name: Run tests
+        run: |
+          bundle exec rake
+      - name: Run rubocop
+        run: |
+          bundle exec rubocop
+
+  report:
+    name: Report
+    runs-on: ubuntu-latest
+    needs: [run_tests]
+    if: ${{ !cancelled() }}
+    steps:
+      - run: exit 1
+        if: >-
+          contains(needs.*.result, 'failure') ||
+          contains(needs.*.result, 'cancelled')
+
+  cleanup:
+    name: Cleanup
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write
+      contents: read
+      pull-requests: read
+      statuses: write
+    if: ${{ !cancelled() }}
+    needs: [run_tests]
+    steps:
+      - name: Run Concurrency Cleanup
+        uses: guideline-platform/common_gh_actions/cleanup_concurrence@main
+        id: concurrency_cleanup
