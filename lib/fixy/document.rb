@@ -1,7 +1,7 @@
 module Fixy
   class Document
 
-    attr_accessor :debug_mode
+    attr_accessor :contents, :debug_mode
 
     def generate_to_file(path, debug = false)
       File.open(path, 'w') do |file|
