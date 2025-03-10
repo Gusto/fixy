@@ -87,7 +87,7 @@ module Fixy
 
         decorator = debug ? Fixy::Decorator::Debug : Fixy::Decorator::Default
         fields = []
-        output = ''
+        output = []
         current_position = 1
         current_record = 1
 
@@ -114,14 +114,14 @@ module Fixy
         # Documentation mandates that every record ends with new line.
         output << line_ending
 
-        { fields: fields, record: decorator.record(output) }
+        { fields: fields, record: decorator.record(output.join) }
       end
     end
 
     # Generate the entry based on the record structure
     def generate(debug = false)
       decorator = debug ? Fixy::Decorator::Debug : Fixy::Decorator::Default
-      output = ''
+      output = []
       current_position = 1
       current_record = 1
 
@@ -143,7 +143,7 @@ module Fixy
       output << line_ending
 
       # All ready. In the words of Mr. Peters: "Take it and go!"
-      decorator.record(output)
+      decorator.record(output.join)
     end
 
     private

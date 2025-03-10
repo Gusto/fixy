@@ -1,3 +1,7 @@
+## v0.6.0
+
+* Performace improvements to use list append instead of string concatenation.
+
 ## v0.5.0
 
 * Make performace improvements related to string concatenation.
