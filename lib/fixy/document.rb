@@ -1,7 +1,7 @@
 module Fixy
   class Document
 
-    attr_accessor :content, :debug_mode
+    attr_accessor :debug_mode
 
     def generate_to_file(path, debug = false)
       File.open(path, 'w') do |file|
@@ -11,12 +11,16 @@ module Fixy
 
     def generate(debug = false)
       @debug_mode = debug
-      @content = ''
+      @contents = []
 
       # Generate document based on user logic.
       build
 
-      decorator.document(@content)
+      decorator.document(@contents.join)
+    end
+
+    def content
+      @contents.join
     end
 
     private
@@ -30,15 +34,15 @@ module Fixy
     end
 
     def prepend_record(record)
-      @content = record.generate(debug_mode) << @content
+      @contents.insert(0, record.generate(debug_mode))
     end
 
     def append_record(record)
-      @content << record.generate(debug_mode)
+      @contents << record.generate(debug_mode)
     end
 
     def parse_record(klass, record)
-      @content << klass.parse(record, debug_mode)[:record]
+      @contents << klass.parse(record, debug_mode)[:record]
     end
   end
 end
