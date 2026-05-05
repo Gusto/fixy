@@ -5,8 +5,8 @@ require 'fixy/version'
 Gem::Specification.new do |spec|
   spec.name          = 'fixy'
   spec.version       = Fixy::VERSION
-  spec.authors       = ['Omar Skalli']
-  spec.email         = ['omar@zenpayroll.com']
+  spec.authors       = ['Gusto']
+  spec.email         = ['gusto-opensource-buildkite@gusto.com']
   spec.description   = %q{Library for generating fixed width flat files.}
   spec.summary       = %q{Provides a DSL for defining, generating, and debugging fixed width documents.}
   spec.homepage      = 'https://github.com/gusto/fixy'
