@@ -9,10 +9,11 @@ Gem::Specification.new do |spec|
   spec.email         = ['omar@zenpayroll.com']
   spec.description   = %q{Library for generating fixed width flat files.}
   spec.summary       = %q{Provides a DSL for defining, generating, and debugging fixed width documents.}
-  spec.homepage      = 'https://github.com/chetane/fixy'
+  spec.homepage      = 'https://github.com/gusto/fixy'
   spec.license       = 'MIT'
 
-  spec.files         = `git ls-files`.split($/)
+  excluded_files     = ['Dockerfile', 'docker-compose.yml', 'solano.yml']
+  spec.files         = `git ls-files`.split($/).reject { |f| f.start_with?('.buildkite/') || excluded_files.include?(f) }
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
