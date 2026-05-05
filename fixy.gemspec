@@ -12,8 +12,15 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/gusto/fixy'
   spec.license       = 'MIT'
 
-  excluded_files     = ['Dockerfile', 'docker-compose.yml', 'solano.yml']
-  spec.files         = `git ls-files`.split($/).reject { |f| f.start_with?('.buildkite/') || excluded_files.include?(f) }
+  spec.files         = Dir.chdir(__dir__) do
+    Dir.glob([
+               '*.gemspec',
+               'LICENSE.txt',
+               'README.md',
+               'CHANGELOG.md',
+               'lib/**/*'
+             ])
+  end
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
