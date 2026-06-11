@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.version       = Fixy::VERSION
   spec.authors       = ['Gusto']
   spec.email         = ['gusto-opensource-buildkite@gusto.com']
-  spec.description   = %q{Library for generating fixed width flat files.}
+  spec.description   = %q{Library for generating fixed width flat files. Fork of OmarSkalli/fixy.}
   spec.summary       = %q{Provides a DSL for defining, generating, and debugging fixed width documents.}
   spec.homepage      = 'https://github.com/gusto/fixy'
   spec.license       = 'MIT'
