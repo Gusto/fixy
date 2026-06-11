@@ -1,3 +1,12 @@
+## v0.6.2
+
+* Update gemspec to use explicit file list instead of `git ls-files`
+* Update gem ownership metadata to Gusto
+
+## v0.6.1
+
+* Make `contents` an `attr_accessor` for performance improvements
+
 ## v0.6.0
 
 * Performace improvements to use list append instead of string concatenation.

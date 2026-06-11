@@ -11,6 +11,10 @@ Gem::Specification.new do |spec|
   spec.summary       = %q{Provides a DSL for defining, generating, and debugging fixed width documents.}
   spec.homepage      = 'https://github.com/gusto/fixy'
   spec.license       = 'MIT'
+  spec.metadata      = {
+    'source_code_uri' => 'https://github.com/gusto/fixy',
+    'changelog_uri'   => 'https://github.com/Gusto/fixy/blob/master/CHANGELOG.md'
+  }
 
   spec.files         = Dir.chdir(__dir__) do
     Dir.glob([
