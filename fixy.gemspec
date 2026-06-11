@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.license       = 'MIT'
   spec.metadata      = {
     'source_code_uri' => 'https://github.com/gusto/fixy',
-    'changelog_uri'   => 'https://github.com/Gusto/fixy/blob/master/CHANGELOG.md'
+    'changelog_uri'   => 'https://github.com/gusto/fixy/blob/master/CHANGELOG.md'
   }
 
   spec.files         = Dir.chdir(__dir__) do
