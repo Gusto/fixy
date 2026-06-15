@@ -16,7 +16,7 @@ module Fixy
 
       def field(name, size, range, type, &block)
         @record_fields ||= default_record_fields
-        range_matches = range.match /^(\d+)(?:-(\d+))?$/
+        range_matches = range.match(/^(\d+)(?:-(\d+))?$/)
 
         # Make sure inputs are valid, we rather fail early than behave unexpectedly later.
         raise ArgumentError, "Name '#{name}' is not a symbol"  unless name.is_a? Symbol

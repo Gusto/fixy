@@ -1,3 +1,7 @@
+## v0.6.3
+
+* Fix ambiguous `/` warning in `record.rb` by wrapping regexp in parentheses
+
 ## v0.6.2
 
 * Update gemspec to use explicit file list instead of `git ls-files`
