@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/Chetane/fixy.svg?branch=master)](https://travis-ci.org/Chetane/fixy)
-
 ## fixy
 
 Library for generating fixed width flat file documents. 
