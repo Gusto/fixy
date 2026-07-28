@@ -1,28 +1,31 @@
-#!/usr/bin/env bash
-set -e
+#!/usr/bin/env ruby
+# frozen_string_literal: true
 
-# CLOUDSMITH_API_KEY is minted by the cloudsmith-auth Buildkite plugin
-# (publish mode) and passed into this container via `docker-compose run -e`.
-: "${CLOUDSMITH_API_KEY:?ERROR: CLOUDSMITH_API_KEY is required}"
+# Build and publish this gem to Cloudsmith. Idempotent: skips the push if this
+# version is already published (Cloudsmith does not 409 a duplicate version -- it
+# leaves a Failed package -- so we check first). Uses Net::HTTP rather than curl
+# so it works in the slim Ruby image, which ships no curl. CLOUDSMITH_API_KEY is
+# minted by the cloudsmith-auth plugin (publish mode); gem push reads it as
+# GEM_HOST_API_KEY="Bearer <token>".
+require 'net/http'
+require 'json'
 
-gem build fixy.gemspec
+key = ENV.fetch('CLOUDSMITH_API_KEY') { abort('ERROR: CLOUDSMITH_API_KEY is required') }
+spec = Gem::Specification.load('fixy.gemspec') || abort('could not load fixy.gemspec')
 
-VERSION="$(ruby -e "puts Gem::Specification.load('fixy.gemspec').version")"
-GEM_FILE="fixy-${VERSION}.gem"
-
-# Idempotency: skip the push only if THIS exact name+version is already Completed in Cloudsmith.
-# Cloudsmith's ?query= is a fuzzy token search (version:1.2.3 can match 1.2.30; name matches
-# related packages), so we parse the JSON and require an exact name+version+status match rather
-# than grepping the whole response. Best-effort: on any lookup failure (empty/401/parse error)
-# we fall through to the push, since the push is the source of truth.
-if curl -sS -H "X-Api-Key: ${CLOUDSMITH_API_KEY}" \
-     "https://api.cloudsmith.io/v1/packages/gusto/gusto/?query=name:fixy+version:${VERSION}" 2>/dev/null \
-   | ruby -rjson -e 'pkgs = (JSON.parse(STDIN.read) rescue nil); exit(pkgs.is_a?(Array) && pkgs.any? { |p| p["name"] == "fixy" && p["version"] == ARGV[0] && p["status_str"] == "Completed" } ? 0 : 1)' "$VERSION"; then
-  echo "fixy ${VERSION} is already published to Cloudsmith - skipping push."
+api = URI('https://api.cloudsmith.io/v1/packages/gusto/gusto/')
+api.query = URI.encode_www_form(query: "name:#{spec.name} version:#{spec.version}")
+get = Net::HTTP::Get.new(api)
+get['X-Api-Key'] = key
+res = Net::HTTP.start(api.host, api.port, use_ssl: true) { |http| http.request(get) }
+if res.is_a?(Net::HTTPSuccess) &&
+   JSON.parse(res.body).any? { |p| p['version'] == spec.version.to_s && p['status_str'] == 'Completed' }
+  puts "#{spec.name} #{spec.version} already published to Cloudsmith; skipping."
   exit 0
-fi
+end
 
-# gem push reads the token via GEM_HOST_API_KEY (not argv); no `set -x` here so the Bearer
-# token is never echoed into the build log.
-GEM_HOST_API_KEY="Bearer ${CLOUDSMITH_API_KEY}" \
-  gem push --host https://ruby.cloudsmith.io/gusto/gusto "${GEM_FILE}"
+system('gem', 'build', 'fixy.gemspec') || abort('gem build failed')
+gem_file = "#{spec.name}-#{spec.version}.gem"
+ENV['GEM_HOST_API_KEY'] = "Bearer #{key}"
+system('gem', 'push', '--host', 'https://ruby.cloudsmith.io/gusto/gusto', gem_file) || abort('gem push failed')
+puts "Published #{spec.name} #{spec.version} to Cloudsmith."
