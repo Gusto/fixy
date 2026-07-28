@@ -11,7 +11,7 @@ steps:
   prompt: 'Publish this gem to the server using Fixy::VERSION as the version?'
   branches: 'main'
 - name: ':ruby: Build & Publish gem'
-  command: 'docker-compose build && docker-compose --project-name $BUILDKITE_JOB_ID run -e CLOUDSMITH_API_KEY app sh .buildkite/publish.sh'
+  command: 'docker-compose build && docker-compose --project-name $BUILDKITE_JOB_ID run -e CLOUDSMITH_API_KEY app ruby .buildkite/publish.sh'
   agents:
     queue: gemstash-publish
   branches: 'main'
