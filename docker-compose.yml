@@ -1,5 +1,13 @@
-version: '2'
 services:
   app:
     build:
       context: .
+      secrets:
+        - cloudsmith_api_key
+    environment:
+      - CLOUDSMITH_API_KEY
+      - BUNDLE_DL__CLOUDSMITH__IO
+
+secrets:
+  cloudsmith_api_key:
+    environment: CLOUDSMITH_API_KEY

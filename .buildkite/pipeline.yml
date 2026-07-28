@@ -3,6 +3,9 @@ steps:
   command: 'docker-compose build && docker-compose --project-name $BUILDKITE_JOB_ID run app bundle exec rake spec'
   agents:
     queue: single
+  plugins:
+  - ssh://git@github.com/Gusto/cloudsmith-auth-buildkite-plugin.git#v2.2.0:
+      mode: pull
 - wait
 - block: ':rocket: Publish to Gem Server'
   prompt: 'Publish this gem to the server using Fixy::VERSION as the version?'
