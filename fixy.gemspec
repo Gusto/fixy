@@ -12,6 +12,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/gusto/fixy'
   spec.license       = 'MIT'
   spec.metadata      = {
+    'allowed_push_host' => 'https://ruby.cloudsmith.io/gusto/gusto',
     'source_code_uri' => 'https://github.com/gusto/fixy',
     'changelog_uri'   => 'https://github.com/gusto/fixy/blob/main/CHANGELOG.md'
   }
