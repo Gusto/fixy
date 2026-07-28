@@ -1,3 +1,7 @@
+## v0.6.4
+
+* Test build only - no actual change: confirming publish works after CI updates
+
 ## v0.6.3
 
 * Fix ambiguous `/` warning in `record.rb` by wrapping regexp in parentheses
