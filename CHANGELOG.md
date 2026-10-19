@@ -1,4 +1,4 @@
-## v0.7.0.gusto
+## v0.7.0
 
 * Declare `required_ruby_version >= 3.2.0` in the gemspec
 * Build and test on Ruby 3.4.11 (was 3.2.2) and Bundler 4.0.22 (was 2.1.4)

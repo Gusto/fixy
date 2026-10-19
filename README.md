@@ -213,6 +213,10 @@ end
 
 
 
+## Versioning
+
+This is Gusto's fork of OmarSkalli/fixy. The two share releases through 0.0.8. From 0.2.0 on, Gusto numbers its releases independently of upstream and publishes them to its own gem server, not rubygems.org, so the `fixy` on rubygems.org (latest 0.0.9) is the upstream gem rather than this one.
+
 ## Contributing
 
 1. Fork it

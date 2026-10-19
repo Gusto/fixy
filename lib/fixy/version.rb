@@ -1,3 +1,3 @@
 module Fixy
-  VERSION = '0.7.0.gusto'
+  VERSION = '0.7.0'
 end
