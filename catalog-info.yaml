@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: fixy
+  description: "Library for generating fixed width flat files. Fork of OmarSkalli/fixy."
+  tags:
+    - ruby
+    - gem
+  annotations:
+    github.com/project-slug: gusto/fixy
+    buildkite.com/project-slug: gusto/fixy
+spec:
+  type: library
+  owner: team-developer-productivity-rails
+  lifecycle: stable
+  dependsOn: []
