@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.10.0
-FROM ruby:3.4.11-slim
+FROM ruby:3.4.12-slim
 
 WORKDIR /home/gusto
 
